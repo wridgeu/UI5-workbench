@@ -6,14 +6,13 @@
     <l:ResponsiveSplitter defaultPane="default">
       <l:PaneContainer>
         <l:SplitPane requiredParentWidth="400" id="default">
-
           <Page title="{i18n>title}">
             <content></content>
           </Page>
         </l:SplitPane>
         <l:PaneContainer orientation="Vertical">
           <l:SplitPane requiredParentWidth="600">
-              <Page title="Minimum parent width 800">
+              <Page title="Minimum parent width 600">
               </Page>
           </l:SplitPane>
           <l:SplitPane requiredParentWidth="800">
