@@ -1,5 +1,6 @@
-# workbench
-Insert the purpose of this project and some intersting infos here
+# Introduction
+
+I had the idea to create a UI5 application that resembles the look of the SAP transaction SE80.
 
 
 ## Credits
