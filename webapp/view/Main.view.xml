@@ -1,12 +1,27 @@
- <mvc:View controllerName="com.mrb.workbench.controller.Main"
-  displayBlock="true"
-  xmlns="sap.m"
-  xmlns:mvc="sap.ui.core.mvc">
-  <App id="idAppControl" >
-    <pages>
-      <Page title="{i18n>title}">
-        <content></content>
-      </Page>
-    </pages>
+<mvc:View controllerName="com.mrb.workbench.controller.Main" displayBlock="true" 
+  xmlns="sap.m" 
+  xmlns:mvc="sap.ui.core.mvc" 
+  xmlns:l="sap.ui.layout">
+  <App id="idAppControl">
+    <l:ResponsiveSplitter defaultPane="default">
+      <l:PaneContainer>
+        <l:SplitPane requiredParentWidth="400" id="default">
+
+          <Page title="{i18n>title}">
+            <content></content>
+          </Page>
+        </l:SplitPane>
+        <l:PaneContainer orientation="Vertical">
+          <l:SplitPane requiredParentWidth="600">
+              <Page title="Minimum parent width 800">
+              </Page>
+          </l:SplitPane>
+          <l:SplitPane requiredParentWidth="800">
+              <Page title="Minimum parent width 800">
+              </Page>
+          </l:SplitPane>
+        </l:PaneContainer>
+      </l:PaneContainer>
+    </l:ResponsiveSplitter>
   </App>
 </mvc:View>
