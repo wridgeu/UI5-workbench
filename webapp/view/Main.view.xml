@@ -1,9 +1,7 @@
 <mvc:View controllerName="com.mrb.workbench.controller.Main" displayBlock="true" 
   xmlns="sap.m" 
   xmlns:mvc="sap.ui.core.mvc">
-  <Shell appWidthLimited="false" >
-    <app>
+  <Shell appWidthLimited="false">
       <App id="idAppControl"/>
-    </app>
   </Shell>
 </mvc:View>
