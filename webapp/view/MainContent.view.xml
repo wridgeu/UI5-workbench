@@ -3,29 +3,53 @@
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:l="sap.ui.layout" 
     xmlns:ce="sap.ui.codeeditor">
-    <Page>
+    <Page titleAlignment="Center" title="SE80">
+    <!-- https://sapui5.hana.ondemand.com/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.SplitterNested1 -->
         <content>
             <l:ResponsiveSplitter defaultPane="default">
                 <l:PaneContainer>
                     <l:PaneContainer orientation="Vertical">
-                        <l:SplitPane requiredParentWidth="400" id="default">
-                            <Page titleAlignment="Center" title="{i18n>title}">
-                                <content></content>
+                        <l:SplitPane requiredParentWidth="400">
+                            <Page titleAlignment="Center" title="{i18n>leftTopContainer}">
+                                <content>
+                                    <List>
+                                        <!-- Display Saved Items in Browser -->
+                                        <ActionListItem text="Saved Items"/>
+                                        <!-- .json file of possible langauges -->
+                                        <ActionListItem text="Language"/>
+                                        <!-- .json file of possible themes -->
+                                        <ActionListItem text="Theme"/>
+                                    </List>
+                                </content>
                             </Page>
                         </l:SplitPane>
                         <l:SplitPane requiredParentWidth="400">
-                            <Page titleAlignment="Center" title="Minimum parent width 600">
+                            <Page titleAlignment="Center" title="{i18n>leftBottomContainer}">
+                                <content>
+                                    <!--fill list with json data-->
+                                    <List items="{/languages}">
+                                        <ActionListItem text="{name}"/>
+                                        <!-- <StandardListItem title="{name}"/> -->
+                                    </List>
+                                </content>
                             </Page>
                         </l:SplitPane>
                     </l:PaneContainer>
                     <l:PaneContainer orientation="Horizontal">
-                        <l:SplitPane requiredParentWidth="800">
-                            <Page titleAlignment="Center" title="Minimum parent width 800">
+                        <l:SplitPane requiredParentWidth="800" id="default">
+                            <Page titleAlignment="Center" title="{i18n>editor}">
                                 <content>
+                                    <Toolbar>
+                                        <ToolbarSpacer/>
+                                        <Button icon="sap-icon://save" type="Transparent" press="onSave" ariaLabelledBy="editButtonLabel"/>
+                                    </Toolbar>
                                     <IconTabHeader id="iconTabHeader" selectedKey="invalidKey" select=".onSelectTab">
+
                                         <items>
-                                            <IconTabFilter text="A" key="A" />
-                                            <IconTabFilter text="B" key="B" />
+                                            <!-- add button for: add / delete tab -->
+                                            <!-- each tab is a new 'file' which can be saved in browser as text -->
+                                            <IconTabFilter text="A" key="A"/>
+                                            <IconTabFilter text="B" key="B"/>
                                         </items>
                                     </IconTabHeader>
                                     <ce:CodeEditor id="aCodeEditor" type="abap" />
