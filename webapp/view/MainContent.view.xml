@@ -1,0 +1,40 @@
+<mvc:View controllerName="com.mrb.workbench.controller.MainContent" displayBlock="true" 
+    xmlns="sap.m" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:ce="sap.ui.codeeditor">
+    <Page>
+        <content>
+            <l:ResponsiveSplitter defaultPane="default">
+                <l:PaneContainer>
+                    <l:PaneContainer orientation="Vertical">
+                        <l:SplitPane requiredParentWidth="400" id="default">
+                            <Page titleAlignment="Center" title="{i18n>title}">
+                                <content></content>
+                            </Page>
+                        </l:SplitPane>
+                        <l:SplitPane requiredParentWidth="400">
+                            <Page titleAlignment="Center" title="Minimum parent width 600">
+                            </Page>
+                        </l:SplitPane>
+                    </l:PaneContainer>
+                    <l:PaneContainer orientation="Horizontal">
+                        <l:SplitPane requiredParentWidth="800">
+                            <Page titleAlignment="Center" title="Minimum parent width 800">
+                                <content>
+                                    <IconTabHeader id="iconTabHeader" selectedKey="invalidKey" select=".onSelectTab">
+                                        <items>
+                                            <IconTabFilter text="A" key="A" />
+                                            <IconTabFilter text="B" key="B" />
+                                        </items>
+                                    </IconTabHeader>
+                                    <ce:CodeEditor id="aCodeEditor" type="abap" />
+                                </content>
+                            </Page>
+                        </l:SplitPane>
+                    </l:PaneContainer>
+                </l:PaneContainer>
+            </l:ResponsiveSplitter>
+        </content>
+    </Page>
+</mvc:View>
