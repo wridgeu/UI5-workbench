@@ -11,7 +11,13 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._codeEditor.setType("abap");
       this._updateCeTitle("ABAP");
     },
-
+    // TODO: Menu Item handlers
+    onMenuSaves: function () {},
+    onMenuTheme: function () {},
+    onMenuLanguage: function () {},
+    _updateListBinding: function(){
+      // TODO: dynamically upate the binding of list per menu-button
+    },
     onListItemPress: function (oEvt) {
       // TODO: dynamic bind -> CE Type, Theme or ReadSavedItems
       var boundItemValues = oEvt
@@ -21,10 +27,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._codeEditor.setType(boundItemValues.value);
       this._updateCeTitle(boundItemValues.name);
     },
-    onMenuItemPress: function(oEvt){
-      // TODO: dynamic bind for list
-    },
-    _updateCeTitle: function(sName){
+    _updateCeTitle: function (sName) {
       this._ceTitle.setText(sName);
     }
   });
