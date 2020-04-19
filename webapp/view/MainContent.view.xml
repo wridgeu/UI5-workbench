@@ -27,8 +27,8 @@
                             <Page titleAlignment="Center" title="{i18n>leftBottomContainer}">
                                 <content>
                                     <!--fill list with json data-->
-                                    <List items="{/languages}">
-                                        <ActionListItem text="{name}"/>
+                                    <List items="{/languages}" itemPress="onItemPress">
+                                        <ActionListItem  text="{name} "/>
                                         <!-- <StandardListItem title="{name}"/> -->
                                     </List>
                                 </content>
@@ -41,6 +41,8 @@
                                 <content>
                                     <Toolbar>
                                         <ToolbarSpacer/>
+                                        <Title id="ceTitle" level="H3" text="" />
+                                        <ToolbarSpacer/>
                                         <Button icon="sap-icon://save" type="Transparent" press="onSave" ariaLabelledBy="editButtonLabel"/>
                                     </Toolbar>
                                     <IconTabHeader id="iconTabHeader" selectedKey="invalidKey" select=".onSelectTab">
@@ -52,7 +54,7 @@
                                             <IconTabFilter text="B" key="B"/>
                                         </items>
                                     </IconTabHeader>
-                                    <ce:CodeEditor id="aCodeEditor" type="abap" />
+                                    <ce:CodeEditor id="aCodeEditor"/>
                                 </content>
                             </Page>
                         </l:SplitPane>
