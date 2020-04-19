@@ -12,7 +12,7 @@
                         <l:SplitPane requiredParentWidth="400">
                             <Page titleAlignment="Center" title="{i18n>leftTopContainer}">
                                 <content>
-                                    <List>
+                                    <List itemPress="onMenuItemPress">
                                         <!-- Display Saved Items in Browser -->
                                         <ActionListItem text="Saved Items"/>
                                         <!-- .json file of possible langauges -->
@@ -27,7 +27,7 @@
                             <Page titleAlignment="Center" title="{i18n>leftBottomContainer}">
                                 <content>
                                     <!--fill list with json data-->
-                                    <List items="{/languages}" itemPress="onItemPress">
+                                    <List items="{/languages}" itemPress="onListItemPress">
                                         <ActionListItem  text="{name} "/>
                                         <!-- <StandardListItem title="{name}"/> -->
                                     </List>
