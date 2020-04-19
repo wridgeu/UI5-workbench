@@ -1,10 +1,11 @@
 <mvc:View controllerName="com.mrb.workbench.controller.MainContent" displayBlock="true" 
     xmlns="sap.m" 
+    xmlns:core="sap.ui.core" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:l="sap.ui.layout" 
     xmlns:ce="sap.ui.codeeditor">
     <Page titleAlignment="Center" title="SE80">
-    <!-- https://sapui5.hana.ondemand.com/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.SplitterNested1 -->
+        <!-- https://sapui5.hana.ondemand.com/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.SplitterNested1 -->
         <content>
             <l:ResponsiveSplitter defaultPane="default">
                 <l:PaneContainer>
@@ -28,7 +29,7 @@
                                 <content>
                                     <!--fill list with json data-->
                                     <List items="{/languages}" itemPress="onListItemPress">
-                                        <ActionListItem  text="{name} "/>
+                                        <ActionListItem text="{name} "/>
                                         <!-- <StandardListItem title="{name}"/> -->
                                     </List>
                                 </content>
@@ -40,6 +41,14 @@
                             <Page titleAlignment="Center" title="{i18n>editor}">
                                 <content>
                                     <Toolbar>
+                                        <Label text="Themes: "/>
+                                        <ComboBox items="{/themes}">
+                                            <core:Item key="{name}" text="{name}" />
+                                        </ComboBox>
+                                        <Label text="Syntax Highlight: "/>
+                                        <ComboBox items="{/languages}">
+                                            <core:Item key="{value}" text="{name}" />
+                                        </ComboBox>
                                         <ToolbarSpacer/>
                                         <Title id="ceTitle" level="H3" text="" />
                                         <ToolbarSpacer/>
