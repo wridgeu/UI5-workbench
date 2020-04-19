@@ -12,13 +12,13 @@
                         <l:SplitPane requiredParentWidth="400">
                             <Page titleAlignment="Center" title="{i18n>leftTopContainer}">
                                 <content>
-                                    <List itemPress="onMenuItemPress">
+                                    <List>
                                         <!-- Display Saved Items in Browser -->
-                                        <ActionListItem text="Saved Items"/>
+                                        <ActionListItem press="onMenuSaves" text="Saved Items"/>
                                         <!-- .json file of possible langauges -->
-                                        <ActionListItem text="Language"/>
+                                        <ActionListItem press="onMenuLanguage" text="Language"/>
                                         <!-- .json file of possible themes -->
-                                        <ActionListItem text="Theme"/>
+                                        <ActionListItem press="onMenuTheme" text="Theme"/>
                                     </List>
                                 </content>
                             </Page>
