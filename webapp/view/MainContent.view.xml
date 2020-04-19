@@ -16,10 +16,6 @@
                                     <List>
                                         <!-- Display Saved Items in Browser -->
                                         <ActionListItem press="onMenuSaves" text="Saved Items"/>
-                                        <!-- .json file of possible langauges -->
-                                        <ActionListItem press="onMenuLanguage" text="Language"/>
-                                        <!-- .json file of possible themes -->
-                                        <ActionListItem press="onMenuTheme" text="Theme"/>
                                     </List>
                                 </content>
                             </Page>
@@ -28,10 +24,9 @@
                             <Page titleAlignment="Center" title="{i18n>leftBottomContainer}">
                                 <content>
                                     <!--fill list with json data-->
-                                    <List items="{/languages}" itemPress="onListItemPress">
+                                    <!-- <List items="{/languages}" itemPress="onListItemPress">
                                         <ActionListItem text="{name} "/>
-                                        <!-- <StandardListItem title="{name}"/> -->
-                                    </List>
+                                    </List> -->
                                 </content>
                             </Page>
                         </l:SplitPane>
@@ -41,23 +36,24 @@
                             <Page titleAlignment="Center" title="{i18n>editor}">
                                 <content>
                                     <Toolbar>
-                                        <Label text="Themes: "/>
-                                        <ComboBox items="{/themes}">
+                                        <Label text="{i18n>selectTheme}"/>
+                                        <ComboBox id="aThemeSelector" selectionChange="onThemeSelection" items="{/themes}">
                                             <core:Item key="{name}" text="{name}" />
                                         </ComboBox>
-                                        <Label text="Syntax Highlight: "/>
-                                        <ComboBox items="{/languages}">
+                                        <Label text="{i18n>selectLangu}"/>
+                                        <ComboBox id="aLanguageSelector" selectionChange="onLanguageSelection" items="{/languages}">
                                             <core:Item key="{value}" text="{name}" />
                                         </ComboBox>
                                         <ToolbarSpacer/>
                                         <Title id="ceTitle" level="H3" text="" />
                                         <ToolbarSpacer/>
-                                        <Button icon="sap-icon://save" type="Transparent" press="onSave" ariaLabelledBy="editButtonLabel"/>
+                                        <Button icon="sap-icon://add" type="Transparent" press="onAdd"/>
+                                        <Button icon="sap-icon://less" type="Transparent" press="onRemove"/>
+                                        <Button icon="sap-icon://save" type="Transparent" press="onSave"/>
                                     </Toolbar>
-                                    <IconTabHeader id="iconTabHeader" selectedKey="invalidKey" select=".onSelectTab">
-
+                                    <IconTabHeader id="iconTabHeader" selectedKey="invalidKey" select="onSelectTab">
                                         <items>
-                                            <!-- add button for: add / delete tab -->
+                                        <!-- add actual handling  -->
                                             <!-- each tab is a new 'file' which can be saved in browser as text -->
                                             <IconTabFilter text="A" key="A"/>
                                             <IconTabFilter text="B" key="B"/>
