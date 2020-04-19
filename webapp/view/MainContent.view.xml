@@ -32,6 +32,9 @@
                         </l:SplitPane>
                     </l:PaneContainer>
                     <l:PaneContainer orientation="Horizontal">
+                        <l:layoutData>
+                            <l:SplitterLayoutData size="85%" />
+                        </l:layoutData>
                         <l:SplitPane requiredParentWidth="800" id="default">
                             <Page titleAlignment="Center" title="{i18n>editor}">
                                 <content>
@@ -51,14 +54,14 @@
                                         <Button icon="sap-icon://less" type="Transparent" press="onRemove"/>
                                         <Button icon="sap-icon://save" type="Transparent" press="onSave"/>
                                     </Toolbar>
-                                    <IconTabHeader id="iconTabHeader" selectedKey="invalidKey" select="onSelectTab">
+                                    <!-- <IconTabHeader id="iconTabHeader" selectedKey="invalidKey" select="onSelectTab">
                                         <items>
-                                        <!-- add actual handling  -->
-                                            <!-- each tab is a new 'file' which can be saved in browser as text -->
+                                            <!- - add actual handling  
+                                            <!- - each tab is a new 'file' which can be saved in browser as text 
                                             <IconTabFilter text="A" key="A"/>
                                             <IconTabFilter text="B" key="B"/>
                                         </items>
-                                    </IconTabHeader>
+                                    </IconTabHeader> -->
                                     <ce:CodeEditor id="aCodeEditor"/>
                                 </content>
                             </Page>
