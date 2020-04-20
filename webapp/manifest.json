@@ -37,7 +37,7 @@
       "viewName": "com.mrb.workbench.view.Main",
       "type": "XML",
       "async": true,
-      "id": "idAppControl"
+      "id": "App"
     },
     "dependencies": {
       "minUI5Version": "1.60.0",
@@ -76,7 +76,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "viewPath": "com.mrb.workbench.view",
-        "controlId": "idAppControl",
+        "controlId": "App",
         "controlAggregation": "pages",
         "async": true
       },
