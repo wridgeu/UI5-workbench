@@ -16,6 +16,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._languSelect.setSelectedKey("abap");
     },
     onMenuSaves: function () {
+      // eslint-disable-next-line no-warning-comments
       // TODO: add saving functionality - browser
     },
     onClearSaves: function () {
@@ -36,9 +37,11 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._codeEditor.setType(boundItemValues.value);
     },
     _updateListBinding: function () {
-      // TODO: dynamically upate the binding of list per menu-button
+      // eslint-disable-next-line no-warning-comments
+      // TODO: dynamically update the binding of list per menu-button
     },
-    onListItemPress: function (oEvt) {
+    onListItemPress: function () {
+      // eslint-disable-next-line no-warning-comments
       // TODO: dynamic bind -> CE Type, Theme or ReadSavedItems
     },
     onSave: function (oEvt) {
@@ -69,16 +72,6 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
           MessageToast.show("No support for Local Storage API");
         });
       }
-    },
-    _generateUUID: function () {
-      //https://stackoverflow.com/questions/105034/how-to-create-guid-uuid - TODO: maybe replace by another package
-      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (
-        c
-      ) {
-        var r = (Math.random() * 16) | 0,
-          v = c == "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      });
     },
   });
 });
