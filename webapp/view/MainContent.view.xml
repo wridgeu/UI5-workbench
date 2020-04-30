@@ -48,8 +48,7 @@
                                         <ComboBox id="aLanguageSelector" selectionChange="onLanguageSelection" items="{/languages}">
                                             <core:Item key="{value}" text="{name}" />
                                         </ComboBox>
-                                        <ToolbarSpacer/>
-                                        <Title id="ceTitle" level="H3" text="" />
+                                        <Button icon="sap-icon://attachment-html" type="Transparent" press="onPrettyPrint" tooltip="Pretty Print"/>
                                         <ToolbarSpacer/>
                                         <Button icon="sap-icon://save" type="Transparent" press="onSave"/>
                                     </Toolbar>
