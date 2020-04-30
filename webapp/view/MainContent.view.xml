@@ -16,6 +16,7 @@
                                     <List>
                                         <!-- Display Saved Items in Browser -->
                                         <ActionListItem press="onMenuSaves" text="Saved Items"/>
+                                        <ActionListItem press="onClearSaves" text="Clear Items"/>
                                     </List>
                                 </content>
                             </Page>
@@ -50,19 +51,9 @@
                                         <ToolbarSpacer/>
                                         <Title id="ceTitle" level="H3" text="" />
                                         <ToolbarSpacer/>
-                                        <Button icon="sap-icon://add" type="Transparent" press="onAdd"/>
-                                        <Button icon="sap-icon://less" type="Transparent" press="onRemove"/>
                                         <Button icon="sap-icon://save" type="Transparent" press="onSave"/>
                                     </Toolbar>
-                                    <!-- <IconTabHeader id="iconTabHeader" selectedKey="invalidKey" select="onSelectTab">
-                                        <items>
-                                            <!- - add actual handling  
-                                            <!- - each tab is a new 'file' which can be saved in browser as text 
-                                            <IconTabFilter text="A" key="A"/>
-                                            <IconTabFilter text="B" key="B"/>
-                                        </items>
-                                    </IconTabHeader> -->
-                                    <ce:CodeEditor id="aCodeEditor"/>
+                                    <ce:CodeEditor id="aCodeEditor" change="onChange"/>
                                 </content>
                             </Page>
                         </l:SplitPane>
