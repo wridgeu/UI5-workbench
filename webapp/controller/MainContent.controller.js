@@ -46,6 +46,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._codeEditor.setValue("");
     },
     onChange: function (oEvt) {
+      //might need some changes
       this._saveChangeToLocalStorage(this, oEvt);
     },
     _saveChangeToLocalStorage: function (context, oEvt) {
