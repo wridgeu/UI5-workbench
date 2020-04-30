@@ -9,7 +9,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._languSelect = this.byId("aLanguageSelector");
       this._themeSelect = this.byId("aThemeSelector");
       this._workbenchStorage = window.localStorage;
-      this._uuid = this._generateUUID();
+      this._storageKey = "_temp";
 
       //manual initialization
       this._codeEditor.setType("abap");
@@ -45,24 +45,29 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._saveChangeToLocalStorage(this, oEvt);
       this._codeEditor.setValue("");
     },
+    onPrettyPrint: function () {
+      this._codeEditor.prettyPrint();
+    },
     onChange: function (oEvt) {
       //might need some changes
       this._saveChangeToLocalStorage(this, oEvt);
     },
     _saveChangeToLocalStorage: function (context, oEvt) {
-      //implement logic to save string - code to local storage
       if (this._workbenchStorage !== undefined) {
         var ceContent = this._codeEditor.getCurrentValue();
-        if (ceContent) {
-          this._workbenchStorage.setItem(this._uuid, ceContent);
+        if (this._storageKey && oEvt.sId === "press" && ceContent) {
+          /* Save current string to LocalStorage on SaveIcon */
+          this._storageKey = window.prompt();
+          this._workbenchStorage.setItem(this._storageKey, ceContent);
+          this._storageKey = "_temp";
+        } else if (ceContent && oEvt.sId === "change") {
+          /* Save current string to LocalStorage on Change */
+          this._workbenchStorage.setItem(this._storageKey, ceContent);
         }
       } else {
         sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
           MessageToast.show("No support for Local Storage API");
         });
-      }
-      if (this._uuid && oEvt.sId === "press") {
-        this._uuid = this._generateUUID();
       }
     },
     _generateUUID: function () {
