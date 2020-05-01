@@ -5,9 +5,9 @@ sap.ui.define(
     "sap/m/Label",
     "sap/m/TextArea",
     "sap/m/Button",
-    "sap/ui/util/Storage"
+    "sap/ui/util/Storage",
   ],
-  function (BaseController, Dialog, Label, TextArea, Button, UI5Storage) {
+  function (BaseController, UI5Storage) {
     "use strict";
 
     return BaseController.extend("com.mrb.workbench.controller.MainContent", {
@@ -15,12 +15,18 @@ sap.ui.define(
         this._codeEditor = this.byId("aCodeEditor");
         this._languSelect = this.byId("aLanguageSelector");
         this._themeSelect = this.byId("aThemeSelector");
-        this._workbenchStorage = new UI5Storage("local", "codeEditor")
+        this._workbenchStorage = new UI5Storage("local", "codeEditor");
         this._storageKey = "_temp";
+        this._saveDialog = sap.ui.xmlfragment(
+          "com.mrb.workbench.view.SaveDialog",
+          this
+        );
+        this.getView().addDependent(this._saveDialog);
 
         //manual initialization
         this._codeEditor.setType("abap");
         this._languSelect.setSelectedKey("abap");
+        this._themeSelect.setSelectedKey("default");
         if (this._workbenchStorage.get("_temp")) {
           this._codeEditor.setValue(this._workbenchStorage.get("_temp"));
         }
@@ -56,7 +62,6 @@ sap.ui.define(
       },
       onSave: function (oEvt) {
         this._saveChangeToLocalStorage(this, oEvt);
-        this._codeEditor.setValue("");
       },
       onPrettyPrint: function () {
         this._codeEditor.prettyPrint();
@@ -69,45 +74,7 @@ sap.ui.define(
         if (this._workbenchStorage !== undefined) {
           var ceContent = this._codeEditor.getCurrentValue();
           if (this._storageKey && oEvt.sId === "press" && ceContent) {
-            /* Save current string to LocalStorage on SaveIcon */
-            // this._storageKey = window.prompt();
-            // var oDialog = new Dialog({
-            //   title: "Save",
-            //   type: "Message",
-            //   content: [
-            //     new Label({
-            //       text: "Name your local storage file",
-            //       labelFor: "saveDialogTextArea",
-            //     }),
-            //     new TextArea("saveDialogTextArea", {
-            //       width: "100%",
-            //       placeholder: "save as ...",
-            //     }),
-            //   ],
-            //   beginButton: new Button({
-            //     text: "Save",
-            //     press: function () {
-            //       var sText = sap.ui
-            //         .getCore()
-            //         .byId("saveDialogTextArea")
-            //         .getValue();
-            //       var _storageKey = sText;
-            //       window.localStorage.setItem(_storageKey, ceContent);
-            //       oDialog.close();
-            //     },
-            //   }),
-            //   endButton: new Button({
-            //     text: "Cancel",
-            //     press: function () {
-            //       oDialog.close();
-            //     },
-            //   }),
-            //   afterClose: function () {
-            //     oDialog.destroy();
-            //   },
-            // });
-
-            // oDialog.open();
+            this._saveDialog.open();
           } else if (ceContent && oEvt.sId === "change") {
             /* Save current string to LocalStorage on Change */
             this._workbenchStorage.put(this._storageKey, ceContent);
@@ -117,6 +84,22 @@ sap.ui.define(
             MessageToast.show("No support for Local Storage API");
           });
         }
+      },
+      onSaveDialogSave: function () {
+        var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
+        var ceContent = this._codeEditor.getCurrentValue();
+        if (!sInputText) {
+          sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
+            MessageToast.show("Filename can't be empty!");
+          });
+          return this._saveDialog.close();
+        }
+        this._workbenchStorage.put(sInputText, ceContent);
+        this._codeEditor.setValue("");
+        this._saveDialog.close();
+      },
+      onSaveDialogCancel: function () {
+        this._saveDialog.close();
       },
     });
   }
