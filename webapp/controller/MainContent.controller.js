@@ -1,8 +1,5 @@
 sap.ui.define(
-  [
-    "com/mrb/workbench/controller/BaseController",
-    "sap/ui/util/Storage"
-  ],
+  ["com/mrb/workbench/controller/BaseController", "sap/ui/util/Storage"],
   function (BaseController, UI5Storage) {
     "use strict";
 
@@ -18,7 +15,6 @@ sap.ui.define(
           this
         );
         this.getView().addDependent(this._saveDialog);
-        this._updateListBinding();
         //manual initialization
         this._codeEditor.setType("abap");
         this._languSelect.setSelectedKey("abap");
@@ -26,13 +22,6 @@ sap.ui.define(
         if (this._workbenchStorage.get("_temp")) {
           this._codeEditor.setValue(this._workbenchStorage.get("_temp"));
         }
-      },
-      onMenuSaves: function () {
-        // eslint-disable-next-line no-warning-comments
-        // TODO: add saving functionality - browser
-      },
-      onClearSaves: function () {
-        this._workbenchStorage.removeAll("");
       },
       onThemeSelection: function (oEvt) {
         var boundItemValues = oEvt
@@ -48,25 +37,55 @@ sap.ui.define(
           .getProperty();
         this._codeEditor.setType(boundItemValues.value);
       },
-      _updateListBinding: function () {
-        // eslint-disable-next-line no-warning-comments
-        // TODO: dynamically update the binding of list per menu-button
+      onPrettyPrint: function () {
+        this._codeEditor.prettyPrint();
+      },
+      onClearSaves: function () {
+        this._workbenchStorage.removeAll("");
       },
       onListItemPress: function () {
         // eslint-disable-next-line no-warning-comments
-        // TODO: dynamic bind -> CE Type, Theme or ReadSavedItems
+        // TODO: Implement loading of saved files
       },
       onSave: function (oEvt) {
         this._saveChangeToLocalStorage(this, oEvt);
       },
-      onPrettyPrint: function () {
-        this._codeEditor.prettyPrint();
-      },
       onChange: function (oEvt) {
-        //might need some changes
         this._saveChangeToLocalStorage(this, oEvt);
       },
+      onSaveDialogSave: function () {
+        var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
+        var saveObject = {
+          name: sInputText,
+          syntax: this._languSelect.getSelectedKey(),
+          content: this._codeEditor.getCurrentValue(),
+        };
+
+        if (!sInputText || !saveObject.content) {
+          sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
+            MessageToast.show("Filename or File itself can't be empty!");
+          });
+          return this._saveDialog.close();
+        }
+
+        this._workbenchStorage.put(sInputText, JSON.stringify(saveObject));
+        this._updateListBinding(saveObject);
+        this._codeEditor.setValue("");
+        this._saveDialog.close();
+      },
+      onSaveDialogCancel: function () {
+        this._saveDialog.close();
+      },
+      _updateListBinding: function (savedObject) {
+        //TODO: Update the list of the saved Items here:
+        // var oModel = this.getModel("savedObjects")
+        // oModel.setData(savedObject);
+        // this.byId("localStorageOverview").setModel(oModel);
+        // console.log(Object.entries(window.localStorage))
+        // var localStorageModel = new sap.ui.model.json.JSONModel(Object.entries(window.localStorage), true)
+      },
       _saveChangeToLocalStorage: function (context, oEvt) {
+        //TODO: might not need context here
         if (this._workbenchStorage.isSupported()) {
           var ceContent = this._codeEditor.getCurrentValue();
           if (this._storageKey && oEvt.sId === "press" && ceContent) {
@@ -81,26 +100,6 @@ sap.ui.define(
           });
         }
       },
-      onSaveDialogSave: function () {
-        var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
-        var ceContent = this._codeEditor.getCurrentValue();
-        if (!sInputText) {
-          sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
-            MessageToast.show("Filename can't be empty!");
-          });
-          return this._saveDialog.close();
-        }
-        this._workbenchStorage.put(sInputText, ceContent);
-        this._codeEditor.setValue("");
-        this._saveDialog.close();
-      },
-      onSaveDialogCancel: function () {
-        this._saveDialog.close();
-      },
-      _updateListBinding: function() {
-        // console.log(Object.entries(window.localStorage))
-        // var localStorageModel = new sap.ui.model.json.JSONModel(Object.entries(window.localStorage), true)
-      }
     });
   }
 );
