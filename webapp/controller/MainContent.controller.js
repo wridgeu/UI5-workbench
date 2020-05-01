@@ -67,7 +67,7 @@ sap.ui.define(
         this._saveChangeToLocalStorage(this, oEvt);
       },
       _saveChangeToLocalStorage: function (context, oEvt) {
-        if (!this._workbenchStorage.isSupported()) {
+        if (this._workbenchStorage.isSupported()) {
           var ceContent = this._codeEditor.getCurrentValue();
           if (this._storageKey && oEvt.sId === "press" && ceContent) {
             this._saveDialog.open();
