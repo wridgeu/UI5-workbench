@@ -15,7 +15,6 @@
                                 <content>
                                     <List>
                                         <!-- Display Saved Items in Browser -->
-                                        <ActionListItem press="onMenuSaves" text="Saved Items"/>
                                         <ActionListItem press="onClearSaves" text="Clear Items"/>
                                     </List>
                                 </content>
@@ -25,9 +24,10 @@
                             <Page titleAlignment="Center" title="{i18n>leftBottomContainer}">
                                 <content>
                                     <!--fill list with json data-->
-                                    <!-- <List items="{}" itemPress="onListItemPress">
-                                        <ActionListItem text="{} "/>
-                                    </List>  -->
+                                    <List id="localStorageOverview" itemPress="onListItemPress">
+                                        <!-- <StandardListItem title="{>name}"/> -->
+                                        <!-- <ActionListItem text="{savedObjects>/name}"/> -->
+                                    </List>
                                 </content>
                             </Page>
                         </l:SplitPane>
