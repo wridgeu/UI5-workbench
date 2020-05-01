@@ -18,7 +18,7 @@ sap.ui.define(
           this
         );
         this.getView().addDependent(this._saveDialog);
-
+        this._updateListBinding();
         //manual initialization
         this._codeEditor.setType("abap");
         this._languSelect.setSelectedKey("abap");
@@ -32,7 +32,7 @@ sap.ui.define(
         // TODO: add saving functionality - browser
       },
       onClearSaves: function () {
-        this._workbenchStorage.clear();
+        this._workbenchStorage.removeAll("codeEditor");
       },
       onThemeSelection: function (oEvt) {
         var boundItemValues = oEvt
@@ -67,7 +67,7 @@ sap.ui.define(
         this._saveChangeToLocalStorage(this, oEvt);
       },
       _saveChangeToLocalStorage: function (context, oEvt) {
-        if (this._workbenchStorage !== undefined) {
+        if (!this._workbenchStorage.isSupported()) {
           var ceContent = this._codeEditor.getCurrentValue();
           if (this._storageKey && oEvt.sId === "press" && ceContent) {
             this._saveDialog.open();
@@ -97,6 +97,10 @@ sap.ui.define(
       onSaveDialogCancel: function () {
         this._saveDialog.close();
       },
+      _updateListBinding: function() {
+        // console.log(Object.entries(window.localStorage))
+        // var localStorageModel = new sap.ui.model.json.JSONModel(Object.entries(window.localStorage), true)
+      }
     });
   }
 );

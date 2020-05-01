@@ -25,9 +25,9 @@
                             <Page titleAlignment="Center" title="{i18n>leftBottomContainer}">
                                 <content>
                                     <!--fill list with json data-->
-                                    <!-- <List items="{/languages}" itemPress="onListItemPress">
-                                        <ActionListItem text="{name} "/>
-                                    </List> -->
+                                    <!-- <List items="{}" itemPress="onListItemPress">
+                                        <ActionListItem text="{} "/>
+                                    </List>  -->
                                 </content>
                             </Page>
                         </l:SplitPane>
