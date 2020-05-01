@@ -1,11 +1,7 @@
 sap.ui.define(
   [
     "com/mrb/workbench/controller/BaseController",
-    "sap/m/Dialog",
-    "sap/m/Label",
-    "sap/m/TextArea",
-    "sap/m/Button",
-    "sap/ui/util/Storage",
+    "sap/ui/util/Storage"
   ],
   function (BaseController, UI5Storage) {
     "use strict";
