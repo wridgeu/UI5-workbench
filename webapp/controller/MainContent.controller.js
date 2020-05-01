@@ -32,7 +32,7 @@ sap.ui.define(
         // TODO: add saving functionality - browser
       },
       onClearSaves: function () {
-        this._workbenchStorage.removeAll("codeEditor");
+        this._workbenchStorage.removeAll("");
       },
       onThemeSelection: function (oEvt) {
         var boundItemValues = oEvt
