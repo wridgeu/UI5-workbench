@@ -55,20 +55,21 @@ sap.ui.define(
       },
       onSaveDialogSave: function () {
         var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
-        var saveObject = new JSONModel({
-          name: sInputText,
-          syntax: this._languSelect.getSelectedKey(),
-          content: this._codeEditor.getCurrentValue(),
-        }, true);
+        var saveObject = {
+          "saves": [{
+            name: sInputText,
+            syntax: this._languSelect.getSelectedKey(),
+            content: this._codeEditor.getCurrentValue()}
+        ]};
         
-        if (!sInputText || !saveObject.getProperty("/content")) {
+        if (!sInputText || !saveObject.saves[0].content) {
           sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
             MessageToast.show("Filename or File itself can't be empty!");
           });
           return this._saveDialog.close();
         }
 
-        this._workbenchStorage.put(sInputText, saveObject.getJSON());
+        this._workbenchStorage.put(sInputText, JSON.stringify(saveObject));
         this._updateListBinding(saveObject);
         this._codeEditor.setValue("");
         this._saveDialog.close();
@@ -78,14 +79,15 @@ sap.ui.define(
       },
       _updateListBinding: function (savedObject) {
         //TODO: Update the list of the saved Items here:
-        // var oModel = this.getModel("savedObjects")
-        // oModel.setData(savedObject);
-        // this.byId("localStorageOverview").setModel(oModel);
-        // console.log(Object.entries(window.localStorage))
-        // var localStorageModel = new sap.ui.model.json.JSONModel(Object.entries(window.localStorage), true)
+        var oJSONModel = new JSONModel(savedObject, false);
+        if (!this.byId("localStorageOverview").getModel("savedObjects")) {
+          this.byId("localStorageOverview").setModel(oJSONModel, "savedObjects");
+          return;
+        }
+        this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").push(savedObject.saves[0]);
+        this.byId("localStorageOverview").getBinding("items").refresh();
       },
       _saveChangeToStorage: function ( oEvt) {
-        //TODO: might not need context here
         if (this._workbenchStorage.isSupported()) {
           var ceContent = this._codeEditor.getCurrentValue();
           if (this._storageKey && oEvt.sId === "press" && ceContent) {
