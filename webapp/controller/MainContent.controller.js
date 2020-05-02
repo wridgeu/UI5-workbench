@@ -1,6 +1,6 @@
 sap.ui.define(
-  ["com/mrb/workbench/controller/BaseController", "sap/ui/util/Storage"],
-  function (BaseController, UI5Storage) {
+  ["com/mrb/workbench/controller/BaseController", "sap/ui/util/Storage", "sap/ui/model/json/JSONModel"],
+  function (BaseController, UI5Storage, JSONModel) {
     "use strict";
 
     return BaseController.extend("com.mrb.workbench.controller.MainContent", {
@@ -55,20 +55,20 @@ sap.ui.define(
       },
       onSaveDialogSave: function () {
         var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
-        var saveObject = {
+        var saveObject = new JSONModel({
           name: sInputText,
           syntax: this._languSelect.getSelectedKey(),
           content: this._codeEditor.getCurrentValue(),
-        };
-
-        if (!sInputText || !saveObject.content) {
+        }, true);
+        
+        if (!sInputText || !saveObject.getProperty("/content")) {
           sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
             MessageToast.show("Filename or File itself can't be empty!");
           });
           return this._saveDialog.close();
         }
 
-        this._workbenchStorage.put(sInputText, JSON.stringify(saveObject));
+        this._workbenchStorage.put(sInputText, saveObject.getJSON());
         this._updateListBinding(saveObject);
         this._codeEditor.setValue("");
         this._saveDialog.close();
