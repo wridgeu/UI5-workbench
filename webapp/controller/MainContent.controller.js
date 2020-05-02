@@ -48,10 +48,10 @@ sap.ui.define(
         // TODO: Implement loading of saved files
       },
       onSave: function (oEvt) {
-        this._saveChangeToLocalStorage(this, oEvt);
+        this._saveChangeToStorage(oEvt);
       },
       onChange: function (oEvt) {
-        this._saveChangeToLocalStorage(this, oEvt);
+        this._saveChangeToStorage(oEvt);
       },
       onSaveDialogSave: function () {
         var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
@@ -84,7 +84,7 @@ sap.ui.define(
         // console.log(Object.entries(window.localStorage))
         // var localStorageModel = new sap.ui.model.json.JSONModel(Object.entries(window.localStorage), true)
       },
-      _saveChangeToLocalStorage: function (context, oEvt) {
+      _saveChangeToStorage: function ( oEvt) {
         //TODO: might not need context here
         if (this._workbenchStorage.isSupported()) {
           var ceContent = this._codeEditor.getCurrentValue();
