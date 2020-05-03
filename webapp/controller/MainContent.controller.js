@@ -1,14 +1,17 @@
 sap.ui.define(
-  ["com/mrb/workbench/controller/BaseController", "sap/ui/util/Storage", "sap/ui/model/json/JSONModel"],
-  function (BaseController, UI5Storage, JSONModel) {
+  [
+    "com/mrb/workbench/controller/BaseController",
+    "sap/ui/model/json/JSONModel",
+  ],
+  function (BaseController, JSONModel) {
     "use strict";
 
     return BaseController.extend("com.mrb.workbench.controller.MainContent", {
       onInit: function () {
+        this._workbenchStorage = this.getOwnerComponent().getStorageInstance();
         this._codeEditor = this.byId("aCodeEditor");
         this._languSelect = this.byId("aLanguageSelector");
         this._themeSelect = this.byId("aThemeSelector");
-        this._workbenchStorage = new UI5Storage("local", "codeEditor");
         this._storageKey = "_temp";
         this._saveDialog = sap.ui.xmlfragment(
           "com.mrb.workbench.view.SaveDialog",
@@ -56,12 +59,15 @@ sap.ui.define(
       onSaveDialogSave: function () {
         var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
         var saveObject = {
-          "saves": [{
-            name: sInputText,
-            syntax: this._languSelect.getSelectedKey(),
-            content: this._codeEditor.getCurrentValue()}
-        ]};
-        
+          saves: [
+            {
+              name: sInputText,
+              syntax: this._languSelect.getSelectedKey(),
+              content: this._codeEditor.getCurrentValue(),
+            },
+          ],
+        };
+
         if (!sInputText || !saveObject.saves[0].content) {
           sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
             MessageToast.show("Filename or File itself can't be empty!");
@@ -81,13 +87,19 @@ sap.ui.define(
         //TODO: Update the list of the saved Items here:
         var oJSONModel = new JSONModel(savedObject, false);
         if (!this.byId("localStorageOverview").getModel("savedObjects")) {
-          this.byId("localStorageOverview").setModel(oJSONModel, "savedObjects");
+          this.byId("localStorageOverview").setModel(
+            oJSONModel,
+            "savedObjects"
+          );
           return;
         }
-        this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").push(savedObject.saves[0]);
+        this.byId("localStorageOverview")
+          .getModel("savedObjects")
+          .getProperty("/saves")
+          .push(savedObject.saves[0]);
         this.byId("localStorageOverview").getBinding("items").refresh();
       },
-      _saveChangeToStorage: function ( oEvt) {
+      _saveChangeToStorage: function (oEvt) {
         if (this._workbenchStorage.isSupported()) {
           var ceContent = this._codeEditor.getCurrentValue();
           if (this._storageKey && oEvt.sId === "press" && ceContent) {
