@@ -24,7 +24,7 @@
                             <Page titleAlignment="Center" title="{i18n>leftBottomContainer}">
                                 <content>
                                     <!--fill list with json data-->
-                                    <List  showNoData="false" id="localStorageOverview" itemPress="onListItemPress" items="{savedObjects>/saves}">
+                                    <List showNoData="false" id="localStorageOverview" itemPress="onListItemPress" items="{savedObjects>/saves}">
                                         <!-- <StandardListItem title="{savedObjects>/name}"/> -->
                                         <ActionListItem text="{savedObjects>name}" tooltip="{savedObjects>syntax}"/>
                                     </List>
