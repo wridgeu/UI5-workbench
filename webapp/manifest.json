@@ -62,6 +62,9 @@
       "": {
         "type": "sap.ui.model.json.JSONModel",
         "dataSource": "ce_Config"
+      },
+      "savedObjects": {
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {

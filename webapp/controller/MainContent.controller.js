@@ -1,9 +1,8 @@
 sap.ui.define(
   [
     "com/mrb/workbench/controller/BaseController",
-    "sap/ui/model/json/JSONModel",
   ],
-  function (BaseController, JSONModel) {
+  function (BaseController) {
     "use strict";
 
     return BaseController.extend("com.mrb.workbench.controller.MainContent", {
@@ -85,12 +84,8 @@ sap.ui.define(
       },
       _updateListBinding: function (savedObject) {
         //TODO: Update the list of the saved Items here:
-        var oJSONModel = new JSONModel(savedObject, false);
-        if (!this.byId("localStorageOverview").getModel("savedObjects")) {
-          this.byId("localStorageOverview").setModel(
-            oJSONModel,
-            "savedObjects"
-          );
+        if (!this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves")) {
+          this.byId("localStorageOverview").getModel("savedObjects").setData(savedObject);
           return;
         }
         this.byId("localStorageOverview")
