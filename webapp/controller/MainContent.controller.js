@@ -99,7 +99,7 @@ sap.ui.define(
           var ceContent = this._codeEditor.getCurrentValue();
           if (this._storageKey && oEvt.sId === "press" && ceContent) {
             this._saveDialog.open();
-          } else if (ceContent && oEvt.sId === "change") {
+          } else if (oEvt.sId === "change" || oEvt.sId === "liveChange") {
             /* Save current string to LocalStorage on Change */
             this._workbenchStorage.put(this._storageKey, ceContent);
           }

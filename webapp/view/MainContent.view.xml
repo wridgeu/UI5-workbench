@@ -52,7 +52,7 @@
                                         <ToolbarSpacer/>
                                         <Button icon="sap-icon://save" type="Transparent" press="onSave"/>
                                     </Toolbar>
-                                    <ce:CodeEditor id="aCodeEditor" change="onChange"/>
+                                    <ce:CodeEditor id="aCodeEditor" change="onChange" liveChange="onChange" />
                                 </content>
                             </Page>
                         </l:SplitPane>
