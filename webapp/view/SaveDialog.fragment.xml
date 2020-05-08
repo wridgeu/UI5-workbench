@@ -2,7 +2,7 @@
    xmlns="sap.m"
    xmlns:core="sap.ui.core" >
    <Dialog
-      title="Name your save"
+      title="Name your save:"
       verticalScrolling="false"
       horizontalScrolling="false">
         <FlexBox direction="Row" justifyContent="Center">
