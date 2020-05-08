@@ -120,6 +120,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       }
     },
     _loadChangeFromStorage: function (saveName) {
+      //TODO: add another dialogue which asks the user whether or not to proceed when there is still content in the editor
       var storageValue = this._workbenchStorage.get(saveName);
       var saveArray = JSON.parse(storageValue).saves;
       this._codeEditor.setValue(saveArray[0].content);
