@@ -36,7 +36,12 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._codeEditor.prettyPrint();
     },
     onClearSaves: function () {
+      // clear items in local storage
       this._workbenchStorage.removeAll("");
+      // set empty data into model
+      this.byId("localStorageOverview").getModel("savedObjects").setProperty("/saves", []);
+      // update list binding
+      this.byId("localStorageOverview").getBinding("items").refresh();
     },
     onListItemPress: function (oEvt) {
       // eslint-disable-next-line no-warning-comments
@@ -126,9 +131,12 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._codeEditor.setValue(saveArray[0].content);
     },
     _initViewValues: function () {
+      // init syntax highlighting
       this._codeEditor.setType("abap");
+      // init dropdowns
       this._languSelect.setSelectedKey("abap");
       this._themeSelect.setSelectedKey("default");
+      // if _temp exists set content into editor
       if (this._workbenchStorage.get("_temp")) {
         this._codeEditor.setValue(this._workbenchStorage.get("_temp"));
       }
