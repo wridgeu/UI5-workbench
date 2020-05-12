@@ -56,6 +56,16 @@ sap.ui.define(
         return UIComponent.getRouterFor(this);
       },
 
+      getStorageInstance: function () {
+        try {
+          return this.getOwnerComponent().getStorageInstance();
+        } catch (err) {
+          sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
+            MessageToast.show(err);
+          });
+        }
+      },
+
       onNavBack: function () {
         var sPreviousHash = History.getInstance().getPreviousHash();
 
