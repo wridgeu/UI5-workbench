@@ -39,7 +39,9 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       // clear items in local storage
       this._workbenchStorage.removeAll("");
       // set empty data into model
-      this.byId("localStorageOverview").getModel("savedObjects").setProperty("/saves", []);
+      this.byId("localStorageOverview")
+        .getModel("savedObjects")
+        .setProperty("/saves", []);
       // update list binding
       this.byId("localStorageOverview").getBinding("items").refresh();
     },
@@ -82,31 +84,18 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
     },
     _updateListBinding: function (savedObject) {
       //check if there is a binding
-      if (
-        !this.byId("localStorageOverview")
-          .getModel("savedObjects")
-          .getProperty("/saves")
+      if (!this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves")
       ) {
-        this.byId("localStorageOverview")
-          .getModel("savedObjects")
-          .setData(savedObject);
+        this.byId("localStorageOverview").getModel("savedObjects").setData(savedObject);
         return;
       }
       //check if the same name already exists
       //TODO: change to normal callback to match ES5 code-style
       //instead of arrow-functions as I'm not using babel atm.
-      if (
-        this.byId("localStorageOverview")
-          .getModel("savedObjects")
-          .getProperty("/saves")
-          .some((el) => el.name === savedObject.saves[0].name)
-      ) {
+      if (this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").some((el) => el.name === savedObject.saves[0].name)) {
         return;
       }
-      this.byId("localStorageOverview")
-        .getModel("savedObjects")
-        .getProperty("/saves")
-        .push(savedObject.saves[0]);
+      this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").push(savedObject.saves[0]);
       this.byId("localStorageOverview").getBinding("items").refresh();
     },
     _saveChangeToStorage: function (oEvt) {
@@ -139,6 +128,22 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       // if _temp exists set content into editor
       if (this._workbenchStorage.get("_temp")) {
         this._codeEditor.setValue(this._workbenchStorage.get("_temp"));
+      }
+      try {
+        var oAllStoragedItems = this._workbenchStorage.getItems();
+        // for (var key in oAllStoragedItems){
+        //   console.log(oAllStoragedItems[key]);
+        //   // this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").push(JSON.parse(oAllStoragedItems[key]).content);
+        // }
+        Object.keys(oAllStoragedItems).forEach(function(key) {
+          console.log(JSON.parse(oAllStoragedItems[key]));
+          //TODO: .saves[0].content get content and bind it to model
+        });
+        // this.byId("localStorageOverview").getBinding("items").refresh();
+      } catch (err) {
+        sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
+          MessageToast.show("No support for Local Storage API");
+        });
       }
     },
   });
