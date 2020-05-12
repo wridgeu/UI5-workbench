@@ -47,7 +47,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
     onChange: function (oEvt) {
       this._saveChangeToStorage(oEvt);
     },
-    onSaveDialogSave: function (oEvt) {
+    onSaveDialogSave: function () {
       //alternative: oEvt.oSource.getParent().getContent()[0].getParent().oPopup.oContent.mAggregations.content[0].mAggregations.items[0].mAggregations.items[0].mAggregations.items[0].mProperties.value
       var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
       var saveObject = {
