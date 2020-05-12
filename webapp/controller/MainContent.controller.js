@@ -5,7 +5,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
 
   return BaseController.extend("com.mrb.workbench.controller.MainContent", {
     onInit: function () {
-      this._workbenchStorage = this.getOwnerComponent().getStorageInstance();
+      this._workbenchStorage = this.getStorageInstance();
       this._codeEditor = this.byId("aCodeEditor");
       this._languSelect = this.byId("aLanguageSelector");
       this._themeSelect = this.byId("aThemeSelector");
@@ -125,26 +125,24 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       // init dropdowns
       this._languSelect.setSelectedKey("abap");
       this._themeSelect.setSelectedKey("default");
-      // if _temp exists set content into editor
-      if (this._workbenchStorage.get("_temp")) {
-        this._codeEditor.setValue(this._workbenchStorage.get("_temp"));
-      }
-      try {
-        var oAllStoragedItems = this._workbenchStorage.getItems();
-        // for (var key in oAllStoragedItems){
-        //   console.log(oAllStoragedItems[key]);
-        //   // this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").push(JSON.parse(oAllStoragedItems[key]).content);
-        // }
-        Object.keys(oAllStoragedItems).forEach(function(key) {
-          console.log(JSON.parse(oAllStoragedItems[key]));
-          //TODO: .saves[0].content get content and bind it to model
-        });
-        // this.byId("localStorageOverview").getBinding("items").refresh();
-      } catch (err) {
-        sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
-          MessageToast.show("No support for Local Storage API");
-        });
+      var oAllStoragedItems = this._workbenchStorage.getItems();
+      var that = this;
+      Object.keys(oAllStoragedItems).forEach(function(key) {
+        //needs double parse because of """"
+        var slocalStorage = JSON.parse(oAllStoragedItems[key]);
+        if (key === "codeEditor-_temp") {
+          that._codeEditor.setValue(that._workbenchStorage.get("_temp"));
+          return;
+        };
+        var oStorageObject = JSON.parse(slocalStorage);
+        if (!that.getOwnerComponent().getModel("savedObjects").getProperty("/saves")) {
+          that.getOwnerComponent().getModel("savedObjects").setData(oStorageObject);
+          return;
+        } else {
+          that.getOwnerComponent().getModel("savedObjects").getProperty("/saves").push(oStorageObject.saves[0]);
+        }
+      });
       }
     },
-  });
+  );
 });
