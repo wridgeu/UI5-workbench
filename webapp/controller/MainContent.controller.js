@@ -14,7 +14,6 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
         "com.mrb.workbench.view.SaveDialog",
         this
       );
-      this.getView().addDependent(this._saveDialog);
       //manual initialization
       this._initViewValues();
     },
