@@ -54,8 +54,12 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
     onChange: function (oEvt) {
       this._saveChangeToStorage(oEvt);
     },
+    onSaveDialogCancel: function () {
+      this._saveDialog.close();
+    },
     onSaveDialogSave: function () {
       //alternative: oEvt.oSource.getParent().getContent()[0].getParent().oPopup.oContent.mAggregations.content[0].mAggregations.items[0].mAggregations.items[0].mAggregations.items[0].mProperties.value
+      //https://sapui5.hana.ondemand.com/sdk/#/topic/8b325518a2ae48ee91eb2dacda1d1420
       var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
       var saveObject = {
         saves: [
@@ -77,9 +81,6 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._workbenchStorage.put(sInputText, JSON.stringify(saveObject));
       this._updateListBinding(saveObject);
       this._codeEditor.setValue("");
-      this._saveDialog.close();
-    },
-    onSaveDialogCancel: function () {
       this._saveDialog.close();
     },
     _updateListBinding: function (savedObject) {
