@@ -19,11 +19,17 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._initViewValues();
     },
     onThemeSelection: function (oEvt) {
-      var boundItemValues = oEvt.getParameters().selectedItem.getBindingContext().getProperty();
+      var boundItemValues = oEvt
+        .getParameters()
+        .selectedItem.getBindingContext()
+        .getProperty();
       this._codeEditor.setColorTheme(boundItemValues.name);
     },
     onLanguageSelection: function (oEvt) {
-      var boundItemValues = oEvt.getParameters().selectedItem.getBindingContext().getProperty();
+      var boundItemValues = oEvt
+        .getParameters()
+        .selectedItem.getBindingContext()
+        .getProperty();
       this._codeEditor.setType(boundItemValues.value);
     },
     onPrettyPrint: function () {
@@ -33,7 +39,9 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       // clear items in local storage
       this._workbenchStorage.removeAll("");
       // set empty data into model
-      this.byId("localStorageOverview").getModel("savedObjects").setProperty("/saves", []);
+      this.byId("localStorageOverview")
+        .getModel("savedObjects")
+        .setProperty("/saves", []);
       // update list binding
       this.byId("localStorageOverview").getBinding("items").refresh();
     },
@@ -51,11 +59,13 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       //alternative: oEvt.oSource.getParent().getContent()[0].getParent().oPopup.oContent.mAggregations.content[0].mAggregations.items[0].mAggregations.items[0].mAggregations.items[0].mProperties.value
       var sInputText = sap.ui.getCore().byId("saveDlgInput").getValue();
       var saveObject = {
-        saves: [{
+        saves: [
+          {
             name: sInputText,
             syntax: this._languSelect.getSelectedKey(),
             content: this._codeEditor.getCurrentValue(),
-        }]
+          },
+        ],
       };
 
       if (!sInputText || !saveObject.saves[0].content) {
@@ -75,18 +85,31 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
     },
     _updateListBinding: function (savedObject) {
       //check if there is a binding
-      if (!this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves")
+      if (
+        !this.byId("localStorageOverview")
+          .getModel("savedObjects")
+          .getProperty("/saves")
       ) {
-        this.byId("localStorageOverview").getModel("savedObjects").setData(savedObject);
+        this.byId("localStorageOverview")
+          .getModel("savedObjects")
+          .setData(savedObject);
         return;
       }
       //check if the same name already exists
       //TODO: change to normal callback to match ES5 code-style
       //instead of arrow-functions as I'm not using babel atm.
-      if (this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").some((el) => el.name === savedObject.saves[0].name)) {
+      if (
+        this.byId("localStorageOverview")
+          .getModel("savedObjects")
+          .getProperty("/saves")
+          .some((el) => el.name === savedObject.saves[0].name)
+      ) {
         return;
       }
-      this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").push(savedObject.saves[0]);
+      this.byId("localStorageOverview")
+        .getModel("savedObjects")
+        .getProperty("/saves")
+        .push(savedObject.saves[0]);
       this.byId("localStorageOverview").getBinding("items").refresh();
     },
     _saveChangeToStorage: function (oEvt) {
@@ -118,22 +141,33 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._themeSelect.setSelectedKey("default");
       var oAllStoragedItems = this._workbenchStorage.getItems();
       var that = this;
-      Object.keys(oAllStoragedItems).forEach(function(key) {
+      Object.keys(oAllStoragedItems).forEach(function (key) {
         //needs double parse because of """"
         var slocalStorage = JSON.parse(oAllStoragedItems[key]);
         if (key === "codeEditor-_temp") {
           that._codeEditor.setValue(that._workbenchStorage.get("_temp"));
           return;
-        };
+        }
         var oStorageObject = JSON.parse(slocalStorage);
-        if (!that.getOwnerComponent().getModel("savedObjects").getProperty("/saves")) {
-          that.getOwnerComponent().getModel("savedObjects").setData(oStorageObject);
+        if (
+          !that
+            .getOwnerComponent()
+            .getModel("savedObjects")
+            .getProperty("/saves")
+        ) {
+          that
+            .getOwnerComponent()
+            .getModel("savedObjects")
+            .setData(oStorageObject);
           return;
         } else {
-          that.getOwnerComponent().getModel("savedObjects").getProperty("/saves").push(oStorageObject.saves[0]);
+          that
+            .getOwnerComponent()
+            .getModel("savedObjects")
+            .getProperty("/saves")
+            .push(oStorageObject.saves[0]);
         }
       });
-      }
-    },
-  );
+    }
+  });
 });
