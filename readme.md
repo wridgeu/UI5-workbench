@@ -45,4 +45,6 @@ Hint: it already uses the livereload-middleware for the [UI5 tooling](https://gi
 ![](readme_src/UI5ExampleABAP.png)
 
 # Credits
-This project has been generated with 💙 and [easy-ui5](https://github.com/SAP)
+
+* This project has been generated with 💙 and [easy-ui5](https://github.com/SAP)
+* [Repository Picture](https://www.msc-mobile.com/blog/5-steps-how-to-convert-an-application-from-web-dynpro-to-sap-ui5.html)
