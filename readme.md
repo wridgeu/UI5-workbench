@@ -36,11 +36,11 @@ Hint: it already uses the livereload-middleware for the [UI5 tooling](https://gi
 
 ## Basic Layout
 
-[[readme_src/UI5Example.png]]
+![](readme_src/UI5Example.png)
 
 ## Syntax Highlighting
 
-[[readme_src/UI5ExampleABAP.png]]
+![](readme_src/UI5ExampleABAP.png)
 
 # Credits
 This project has been generated with 💙 and [easy-ui5](https://github.com/SAP)
