@@ -15,7 +15,7 @@
                                 <content>
                                     <List>
                                         <!-- Display Saved Items in Browser -->
-                                        <ActionListItem press="onClearSaves" text="Clear Items"/>
+                                        <ActionListItem press="onClearSaves" text="Clear"/>
                                     </List>
                                 </content>
                             </Page>
