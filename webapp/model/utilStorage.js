@@ -1,5 +1,7 @@
 sap.ui.define(["sap/ui/util/Storage"], function (Storage) {
   //extend prototype with new method
+  //as API doesn't offer .extend method:
+  //https://sapui5.hana.ondemand.com/#/api/module%3Asap%2Fui%2Futil%2FStorage
   Storage.prototype.getItems = function () {
     var items = {};
     for (var i = 0; i < window.localStorage.length; i++) {
