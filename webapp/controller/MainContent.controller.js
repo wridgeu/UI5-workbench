@@ -17,6 +17,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       //manual initialization
       this._initViewValues();
     },
+
     onThemeSelection: function (oEvt) {
       var boundItemValues = oEvt
         .getParameters()
@@ -24,6 +25,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
         .getProperty();
       this._codeEditor.setColorTheme(boundItemValues.name);
     },
+
     onLanguageSelection: function (oEvt) {
       var boundItemValues = oEvt
         .getParameters()
@@ -31,9 +33,11 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
         .getProperty();
       this._codeEditor.setType(boundItemValues.value);
     },
+
     onPrettyPrint: function () {
       this._codeEditor.prettyPrint();
     },
+
     onClearSaves: function () {
       // clear items in local storage
       this._workbenchStorage.removeAll("");
@@ -44,19 +48,24 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       // update list binding
       this.byId("localStorageOverview").getBinding("items").refresh();
     },
+
     onListItemPress: function (oEvt) {
       // eslint-disable-next-line no-warning-comments
       this._loadChangeFromStorage(oEvt.getParameters().listItem.getText());
     },
+
     onSave: function (oEvt) {
       this._saveChangeToStorage(oEvt);
     },
+
     onChange: function (oEvt) {
       this._saveChangeToStorage(oEvt);
     },
+
     onSaveDialogCancel: function () {
       this._saveDialog.close();
     },
+
     onSaveDialogSave: function () {
       //alternative: oEvt.oSource.getParent().getContent()[0].getParent().oPopup.oContent.mAggregations.content[0].mAggregations.items[0].mAggregations.items[0].mAggregations.items[0].mProperties.value
       //https://sapui5.hana.ondemand.com/sdk/#/topic/8b325518a2ae48ee91eb2dacda1d1420
@@ -83,6 +92,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       this._codeEditor.setValue("");
       this._saveDialog.close();
     },
+
     _updateListBinding: function (savedObject) {
       //check if there is a binding
       if (
@@ -112,6 +122,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
         .push(savedObject.saves[0]);
       this.byId("localStorageOverview").getBinding("items").refresh();
     },
+
     _saveChangeToStorage: function (oEvt) {
       if (this._workbenchStorage.isSupported()) {
         var ceContent = this._codeEditor.getCurrentValue();
@@ -127,12 +138,14 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
         });
       }
     },
+
     _loadChangeFromStorage: function (saveName) {
       //TODO: add another dialogue which asks the user whether or not to proceed when there is still content in the editor
       var storageValue = this._workbenchStorage.get(saveName);
       var saveArray = JSON.parse(storageValue).saves;
       this._codeEditor.setValue(saveArray[0].content);
     },
+    
     _initViewValues: function () {
       // init syntax highlighting
       this._codeEditor.setType("abap");

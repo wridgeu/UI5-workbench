@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "repository": {
     "type": "git",
-    "directory": "https://github.com/SAPMarco/UI5-workbench"
+    "directory": "https://github.com/wridgeu/UI5-workbench"
   },
   "engines": {
     "node": "12.X"
@@ -16,14 +16,14 @@
     "build:ui": "ui5 build --clean-dest --dest approuter/webapp "
   },
   "dependencies": {
-    "shx": "^0.3.2"
+    "shx": "^0.3.3"
   },
   "devDependencies": {
     "@openui5/ts-types": "^1.60.5",
-    "@ui5/cli": "^2.4.4",
-    "eslint": "^7.9.0",
+    "@ui5/cli": "^2.8.0",
+    "eslint": "^7.17.0",
     "npm-run-all": "^4.1.5",
-    "ui5-middleware-livereload": "^0.4.2"
+    "ui5-middleware-livereload": "^0.5.1"
   },
   "ui5": {
     "dependencies": [
