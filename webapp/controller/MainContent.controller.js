@@ -1,9 +1,9 @@
-sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
-  BaseController
-) {
+sap.ui.define([
+  "com/mrb/workbench/controller/BaseController"
+], function (BaseController) {
   "use strict";
 
-  return BaseController.extend("com.mrb.workbench.controller.MainContent", {
+  return BaseController.extend("com.mrb.workbench.controller.MainContent", /** @lends com.mrb.workbench.controller.MainContent.prototype */ {
     onInit: function () {
       this._workbenchStorage = this.getStorageInstance();
       this._codeEditor = this.byId("aCodeEditor");
@@ -82,9 +82,10 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
 
       if (!sInputText || !saveObject.saves[0].content) {
         sap.ui.require(["sap/m/MessageToast"], function (MessageToast) {
-          MessageToast.show("Filename or File itself can't be empty!");
+          MessageToast.show("Filename or File content can't be empty!");
         });
-        return this._saveDialog.close();
+        this._saveDialog.close();
+        return;
       }
 
       this._workbenchStorage.put(sInputText, JSON.stringify(saveObject));
@@ -95,31 +96,15 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
 
     _updateListBinding: function (savedObject) {
       //check if there is a binding
-      if (
-        !this.byId("localStorageOverview")
-          .getModel("savedObjects")
-          .getProperty("/saves")
-      ) {
-        this.byId("localStorageOverview")
-          .getModel("savedObjects")
-          .setData(savedObject);
-        return;
+      if (!this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves")) {
+        return this.byId("localStorageOverview").getModel("savedObjects").setData(savedObject);
       }
       //check if the same name already exists
       //TODO: change to normal callback to match ES5 code-style
-      //instead of arrow-functions as I'm not using babel atm.
-      if (
-        this.byId("localStorageOverview")
-          .getModel("savedObjects")
-          .getProperty("/saves")
-          .some((el) => el.name === savedObject.saves[0].name)
-      ) {
-        return;
+      if (this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").some((el) => el.name === savedObject.saves[0].name)) {
+        return null;
       }
-      this.byId("localStorageOverview")
-        .getModel("savedObjects")
-        .getProperty("/saves")
-        .push(savedObject.saves[0]);
+      this.byId("localStorageOverview").getModel("savedObjects").getProperty("/saves").push(savedObject.saves[0]);
       this.byId("localStorageOverview").getBinding("items").refresh();
     },
 
@@ -145,7 +130,7 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
       var saveArray = JSON.parse(storageValue).saves;
       this._codeEditor.setValue(saveArray[0].content);
     },
-    
+
     _initViewValues: function () {
       // init syntax highlighting
       this._codeEditor.setType("abap");
@@ -158,27 +143,13 @@ sap.ui.define(["com/mrb/workbench/controller/BaseController"], function (
         //needs double parse because of """"
         var slocalStorage = JSON.parse(oAllStoragedItems[key]);
         if (key === "codeEditor-_temp") {
-          that._codeEditor.setValue(that._workbenchStorage.get("_temp"));
-          return;
+          return that._codeEditor.setValue(that._workbenchStorage.get("_temp"));
         }
-        var oStorageObject = JSON.parse(slocalStorage);
-        if (
-          !that
-            .getOwnerComponent()
-            .getModel("savedObjects")
-            .getProperty("/saves")
-        ) {
-          that
-            .getOwnerComponent()
-            .getModel("savedObjects")
-            .setData(oStorageObject);
-          return;
+        // var oStorageObject = JSON.parse(slocalStorage);
+        if (!that.getOwnerComponent().getModel("savedObjects").getProperty("/saves")) {
+          return that.getOwnerComponent().getModel("savedObjects").setData(slocalStorage);
         } else {
-          that
-            .getOwnerComponent()
-            .getModel("savedObjects")
-            .getProperty("/saves")
-            .push(oStorageObject.saves[0]);
+          that.getOwnerComponent().getModel("savedObjects").getProperty("/saves").push(slocalStorage.saves[0]);
         }
       });
     }
